@@ -856,4 +856,3 @@ bot.on('webhook_error', (error) => {
 console.log('✅ Bot đã sẵn sàng!');
 console.log('🤖 AI Mode:', config.AI_MODE);
 console.log('👤 Test bot tại: @seed_career_coach_bot');
-
