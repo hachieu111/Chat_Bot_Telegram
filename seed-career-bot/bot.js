@@ -799,3 +799,16 @@ bot.on('webhook_error', (error) => {
 console.log('✅ Bot đã sẵn sàng!');
 console.log('🤖 AI Mode:', config.AI_MODE);
 console.log('👤 Test bot tại: @seed_career_coach_bot');
+// ==================== KHẮC PHỤC LỖI RENDER PORT ====================
+// Thêm đoạn này vào cuối cùng file bot.js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('Bot Telegram đang chạy ngon lành! 🚀');
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`✅ Server giả lập đang chạy trên port ${PORT}`);
+});
