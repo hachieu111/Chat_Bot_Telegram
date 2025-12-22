@@ -1,10 +1,28 @@
 // File: bot.js
 const TelegramBot = require('node-telegram-bot-api');
+
+const express = require('express');
+
 const config = require('./config');
 const database = require('./database');
 const skillsData = require('./skills.json');
 const deepseek = require('./deepseek');
 const aiController = require('./ai-controller');
+
+// 1. Khởi tạo Express
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// 2. Lấy token từ biến môi trường
+const token = process.env.TELEGRAM_TOKEN;
+
+// 3. Kiểm tra token (QUAN TRỌNG)
+if (!token) {
+    console.error('❌ ERROR: TELEGRAM_TOKEN is not set!');
+    process.exit(1); // Thoát nếu không có token
+}
+
+
 
 // Khởi tạo bot
 const bot = new TelegramBot(config.TELEGRAM_TOKEN, { 
@@ -12,7 +30,46 @@ const bot = new TelegramBot(config.TELEGRAM_TOKEN, {
   requestTimeout: 60000
 });
 
+
 console.log('🚀 Bot đang khởi động...');
+
+// 5. Middleware để parse JSON
+app.use(express.json());
+
+// 6. Webhook endpoint
+app.post(`/bot${token}`, (req, res) => {
+    console.log('📩 Received update from Telegram');
+    bot.processUpdate(req.body);
+    res.sendStatus(200);
+});
+
+// 7. Health check endpoint
+app.get('/', (req, res) => {
+    res.json({
+        status: 'online',
+        service: 'SEED Career Coach Bot',
+        uptime: process.uptime()
+    });
+});
+
+// 8. Khởi động server
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(`✅ Bot is ready`);
+    
+    // 9. Thiết lập webhook (chỉ khi có domain)
+    const webhookUrl = process.env.RENDER_EXTERNAL_URL 
+        ? `${process.env.RENDER_EXTERNAL_URL}/bot${token}`
+        : null;
+    
+    if (webhookUrl) {
+        bot.setWebHook(webhookUrl)
+            .then(() => console.log(`🌐 Webhook set to: ${webhookUrl}`))
+            .catch(err => console.error('❌ Webhook error:', err.message));
+    } else {
+        console.log('⚠️ Running in local mode (no webhook)');
+    }
+});
 
 const skills = skillsData.skills;
 
@@ -799,3 +856,4 @@ bot.on('webhook_error', (error) => {
 console.log('✅ Bot đã sẵn sàng!');
 console.log('🤖 AI Mode:', config.AI_MODE);
 console.log('👤 Test bot tại: @seed_career_coach_bot');
+
