@@ -1,0 +1,30 @@
+{
+  "6496305290": {
+    "id": 6496305290,
+    "name": "tôi tên hiếu",
+    "currentSkill": "skill_05",
+    "currentStep": 0,
+    "completedSkills": [
+      "skill_01"
+    ],
+    "scores": {
+      "skill_01": 100
+    },
+    "aiUsageCount": 2,
+    "createdAt": "2025-12-22T06:23:42.966Z",
+    "lastActive": "2025-12-22T08:34:36.413Z",
+    "aiMode": null
+  },
+  "6939463544": {
+    "id": 6939463544,
+    "name": "anh",
+    "currentSkill": "skill_01",
+    "currentStep": 2,
+    "completedSkills": [],
+    "scores": {},
+    "aiUsageCount": 9,
+    "createdAt": "2025-12-22T07:44:00.435Z",
+    "lastActive": "2025-12-22T07:50:53.695Z",
+    "aiMode": "free_response"
+  }
+}

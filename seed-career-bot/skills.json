@@ -1,0 +1,730 @@
+{
+  "skills": [
+    {
+      "id": "skill_01",
+      "name": "Chào hỏi - mở đầu tương tác",
+      "description": "Khởi đầu cuộc giao tiếp đúng quy tắc",
+      "difficulty": "dễ",
+      "duration": "5 phút",
+      "icon": "👋",
+      "tags": ["cơ bản", "giao tiếp", "nghi thức"],
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "introduction",
+          "content": "👋 *KỸ NĂNG 1: CHÀO HỎI*\n\nChào bạn! Hôm nay chúng ta học cách chào hỏi tại nơi làm việc.\n\nĐây là kỹ năng đầu tiên và quan trọng nhất!",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_01_step_2"}
+          ]
+        },
+        {
+          "step_id": 2,
+          "type": "theory",
+          "content": "**3 ĐIỀU CẦN NHỚ KHI CHÀO HỎI:**\n\n1. 👀 Nhìn vào người đối diện\n2. 🗣️ Nói rõ ràng, đủ nghe\n3. 😊 Kèm theo nụ cười nhẹ",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_01_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBuổi sáng, bạn gặp giáo viên tại SEED.\nCô nói: *\"Chào em, hôm nay em đến sớm nhỉ.\"*\n\nEm nên nói gì?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Ồ",
+              "feedback": "❌ Chưa tốt! Câu trả lời quá ngắn và thiếu lịch sự."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, em chào cô ạ!",
+              "feedback": "✅ *Xuất sắc!* Câu trả lời đầy đủ, lịch sự và phù hợp.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Im lặng, đi thẳng",
+              "feedback": "❌ Không nên! Im lặng khi người khác chào là bất lịch sự."
+            }
+          ],
+          "ai_controlled": true,
+          "correct_answer": "B",
+          "correct_answer_text": "Dạ, em chào cô ạ!",
+          "validation_rules": {
+            "required_words": ["dạ", "chào", "ạ"],
+            "forbidden_words": ["ồ", "uhm", "ừ"]
+          }
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nGiả sử bạn gặp *đồng nghiệp* cùng tuổi.\nBạn nên chào thế nào?\n\n💡 Gợi ý: *\"Chào bạn! Hôm nay bạn khoẻ không?\"*",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_01_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_01_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Chào hỏi rõ ràng, đủ nghe\n• Nhìn vào người đối diện\n• Tuỳ vai trò mà chào cho phù hợp\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em chào anh/chị ạ!\"\n\"Chào bạn!\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skill_02",
+      "name": "Duy trì hội thoại công việc",
+      "description": "Trả lời - hỏi lại - báo thông tin trong công việc",
+      "difficulty": "trung bình",
+      "duration": "7 phút",
+      "icon": "💬",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "introduction",
+          "content": "💬 *KỸ NĂNG 2: DUY TRÌ HỘI THOẠI*\n\nChào bạn! Hôm nay chúng ta học cách duy trì cuộc trò chuyện tại nơi làm việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_02_step_2"}
+          ]
+        },
+        {
+          "step_id": 2,
+          "type": "theory",
+          "content": "**3 BƯỚC DUY TRÌ HỘI THOẠI:**\n\n1. **LẮNG NGHE** - Nghe hết câu hỏi\n2. **TRẢ LỜI** - Nói ngắn gọn, đủ ý\n3. **HỎI LẠI** - Thể hiện sự quan tâm",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_02_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nĐồng nghiệp hỏi: *\"Em làm xong kệ này chưa?\"*\n\n(Em mới làm được một nửa)",
+          "options": [
+            {
+              "id": "A",
+              "text": "Rồi.",
+              "feedback": "❌ Sai! Nói không đúng sự thật."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, em mới làm được một nửa ạ.",
+              "feedback": "✅ Đúng! Trả lời trung thực và đủ thông tin.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Không trả lời",
+              "feedback": "❌ Không nên! Im lặng làm người khác không biết tình hình."
+            }
+          ],
+          "correct_answer": "B",
+          "correct_answer_text": "Dạ, em mới làm được một nửa ạ."
+        },
+        {
+          "step_id": 4,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG NÂNG CAO:**\nSếp hỏi: *\"Dự án này bao giờ xong?\"*\n\n(Bạn cần thêm 2 ngày nữa)",
+          "options": [
+            {
+              "id": "A",
+              "text": "Em không biết",
+              "feedback": "❌ Không tốt! Thể hiện sự thiếu trách nhiệm."
+            },
+            {
+              "id": "B",
+              "text": "Khoảng 2 ngày nữa ạ. Em sẽ cố gắng hoàn thành sớm.",
+              "feedback": "✅ *Xuất sắc!* Trả lời cụ thể và có cam kết.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Lâu lắm",
+              "feedback": "❌ Quá mơ hồ, không chuyên nghiệp."
+            }
+          ],
+          "correct_answer": "B"
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *HOÀN THÀNH KỸ NĂNG 2!*\n\n**TÓM TẮT:**\n• Trả lời trung thực, đủ thông tin\n• Ước lượng thời gian cụ thể\n• Thể hiện thái độ tích cực\n\n**CÂU MẪU:**\n\"Dạ, em đang làm được 50% ạ.\"\n\"Khoảng 2 ngày nữa ạ. Em sẽ báo cáo tiến độ.\""
+        }
+      ]
+    },
+    {
+      "id": "skill_03",
+      "name": "Lắng nghe tích cực",
+      "description": "Tập trung khi người khác nói",
+      "difficulty": "dễ",
+      "duration": "6 phút",
+      "icon": "👂",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**3 BƯỚC LẮNG NGHE TÍCH CỰC:**\n\n1. **DỪNG LẠI** - Ngừng việc đang làm\n2. **NHÌN** - Nhìn vào người nói\n3. **IM LẶNG** - Không ngắt lời, không nói chuyện riêng"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nTrong lớp handmade, bạn đang cắt giấy.\nCô giáo gọi cả lớp: *\"Các em nghe cô hướng dẫn bước mới nhé.\"*\n\nBạn nên làm gì?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Tiếp tục cắt giấy",
+              "feedback": "❌ Sai! Không thể vừa làm vừa nghe hiệu quả."
+            },
+            {
+              "id": "B",
+              "text": "Vừa cắt vừa nhìn lên",
+              "feedback": "❌ Chưa tốt! Vẫn bị phân tâm."
+            },
+            {
+              "id": "C",
+              "text": "Dừng cắt, quay lại, nhìn cô giáo",
+              "feedback": "✅ *Xuất sắc!* Đây là cách lắng nghe tích cực.",
+              "is_correct": true
+            }
+          ],
+          "correct_answer": "C"
+        }
+      ]
+    },
+    {
+      "id": "skill_04",
+      "name": "Đặt câu hỏi rõ ràng",
+      "description": "Hỏi đúng trọng tâm, dễ hiểu",
+      "difficulty": "trung bình",
+      "duration": "6 phút",
+      "icon": "❓",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**CÁCH ĐẶT CÂU HỎI TỐT:**\n\n1. **XÁC ĐỊNH** - Mình muốn biết điều gì?\n2. **DIỄN ĐẠT** - Nói ngắn gọn, rõ ràng\n3. **LỊCH SỰ** - Thêm 'ạ', 'xin', 'làm ơn'"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn không biết cách sử dụng máy in.\n\nCâu hỏi nào tốt hơn?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Máy in này dùng thế nào?",
+              "feedback": "❌ Quá chung chung, khó trả lời."
+            },
+            {
+              "id": "B",
+              "text": "Anh/chị chỉ em cách in tài liệu từ máy tính với máy in này được không ạ?",
+              "feedback": "✅ *Tốt!* Rõ ràng, cụ thể, lịch sự.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "In kiểu gì?",
+              "feedback": "❌ Quá ngắn, thiếu lịch sự."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_05",
+      "name": "Nhận và thực hiện chỉ dẫn",
+      "description": "Ghi nhớ và làm theo hướng dẫn",
+      "difficulty": "dễ",
+      "duration": "5 phút",
+      "icon": "📝",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**3 BƯỚC NHẬN CHỈ DẪN:**\n\n1. **NGHE KỸ** - Tập trung nghe hết câu\n2. **NHẮC LẠI** - Lặp lại để kiểm tra\n3. **LÀM NGAY** - Thực hiện không trì hoãn"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nCô giáo nói: *\"Em lấy cho cô 5 tờ giấy màu xanh ở tủ thứ 2 nhé.\"*\n\nBạn nên làm gì đầu tiên?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Đi lấy ngay",
+              "feedback": "❌ Dễ quên chi tiết '5 tờ', 'màu xanh', 'tủ thứ 2'."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, em lấy 5 tờ giấy màu xanh ở tủ thứ 2 ạ.",
+              "feedback": "✅ *Đúng!* Nhắc lại giúp ghi nhớ và kiểm tra.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Gật đầu rồi đi",
+              "feedback": "❌ Không chắc đã nghe đúng toàn bộ."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_06",
+      "name": "Báo cáo công việc",
+      "description": "Thông báo tiến độ, vấn đề gặp phải",
+      "difficulty": "trung bình",
+      "duration": "7 phút",
+      "icon": "📊",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**CẤU TRÚC BÁO CÁO:**\n\n1. **KẾT QUẢ** - Đã làm được gì?\n2. **VẤN ĐỀ** - Gặp khó khăn gì?\n3. **KẾ HOẠCH** - Sẽ làm gì tiếp?"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn được giao dọn 3 kệ hàng trong 3 giờ.\nĐã 2 giờ, bạn dọn xong 2 kệ.\n\nKhi sếp hỏi, bạn nói:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Em dọn được 2 kệ rồi.",
+              "feedback": "❌ Thiếu thông tin về thời gian và kế hoạch."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, sau 2 giờ em đã dọn xong 2/3 kệ. Kệ cuối em sẽ cố gắng hoàn thành trong 1 giờ tới ạ.",
+              "feedback": "✅ *Xuất sắc!* Đầy đủ: kết quả, thời gian, kế hoạch.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Còn 1 kệ nữa",
+              "feedback": "❌ Quá sơ sài, không chuyên nghiệp."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_07",
+      "name": "Xin phép và cảm ơn",
+      "description": "Cách xin phép đúng lúc, cảm ơn chân thành",
+      "difficulty": "dễ",
+      "duration": "5 phút",
+      "icon": "🙏",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**XIN PHÉP ĐÚNG CÁCH:**\n\n1. **LỊCH SỰ** - Dạ, thưa, ạ\n2. **RÕ RÀNG** - Xin việc gì, trong bao lâu\n3. **CHẤP NHẬN** - Nếu không được, không cáu"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn muốn về sớm 30 phút vì bị đau đầu.\n\nCâu nào tốt nhất?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Em về nhé",
+              "feedback": "❌ Thiếu lịch sự, không giải thích."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, em xin phép về sớm 30 phút vì hơi đau đầu ạ. Công việc em đã làm xong rồi ạ.",
+              "feedback": "✅ *Rất tốt!* Lịch sự, rõ lý do, thời gian.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Đau đầu quá, em về",
+              "feedback": "❌ Nghe như than vãn, không tôn trọng."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_08",
+      "name": "Ứng xử khi bị góp ý - phê bình",
+      "description": "Giữ bình tĩnh - phản hồi phù hợp",
+      "difficulty": "khó",
+      "duration": "10 phút",
+      "icon": "🎯",
+      "ai_config": {
+        "allow_free_response": true,
+        "max_ai_interactions": 3
+      },
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**3 BƯỚC VÀNG KHI BỊ PHÊ BÌNH:**\n\n1. **BÌNH TĨNH** - Hít thở sâu\n2. **LẮNG NGHE** - Nghe hết ý\n3. **PHẢN HỒI** - Nhẹ nhàng, tích cực"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG (Nhập vai):**\n\n*(Bot đóng vai Trưởng nhóm)*\n\"Lan này, báo cáo tuần này có lỗi chính tả. Anh hơi lo.\"\n\n*(Bạn là Lan)*\nBạn sẽ phản ứng thế nào?",
+          "options": [
+            {
+              "id": "1",
+              "text": "\"Em biết rồi, lần sau sửa.\" (giọng bực bội)",
+              "feedback": "❌ Thái độ bực bội dễ gây hiểu lầm."
+            },
+            {
+              "id": "2",
+              "text": "\"Tại máy tính hỏng...\" (đổ lỗi)",
+              "feedback": "❌ Đổ lỗi cho thấy không nhận trách nhiệm."
+            },
+            {
+              "id": "3",
+              "text": "Im lặng, cúi mặt",
+              "feedback": "❌ Im lặng làm cuộc nói chuyện khó tiếp tục."
+            },
+            {
+              "id": "4",
+              "text": "\"Dạ, em xin lỗi ạ. Anh chỉ giúp em chỗ sai để em sửa ạ.\"",
+              "feedback": "✅ *TUYỆT VỜI!* Thể hiện sự cầu tiến và trách nhiệm.",
+              "is_correct": true
+            }
+          ],
+          "ai_controlled": true,
+          "correct_answer": "4",
+          "correct_answer_text": "Dạ, em xin lỗi ạ. Anh chỉ giúp em chỗ sai để em sửa ạ."
+        }
+      ]
+    },
+    {
+      "id": "skill_09",
+      "name": "Làm việc nhóm hiệu quả",
+      "description": "Phối hợp với đồng nghiệp",
+      "difficulty": "trung bình",
+      "duration": "8 phút",
+      "icon": "👥",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**NGUYÊN TẮC LÀM VIỆC NHÓM:**\n\n1. **PHÂN CÔNG** - Rõ ai làm việc gì\n2. **HỖ TRỢ** - Giúp đỡ khi cần\n3. **CHIA SẺ** - Thông tin kịp thời"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nNhóm 3 người làm dự án. Bạn làm xong phần mình sớm.\n\nBạn nên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Ngồi chơi, chờ người khác",
+              "feedback": "❌ Không tích cực, ích kỷ."
+            },
+            {
+              "id": "B",
+              "text": "Hỏi: \"Mọi người cần em hỗ trợ gì không ạ?\"",
+              "feedback": "✅ *Rất tốt!* Tinh thần đồng đội cao.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Phàn nàn: \"Sao mọi người làm chậm thế?\"",
+              "feedback": "❌ Tiêu cực, gây mất đoàn kết."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_10",
+      "name": "Giải quyết mâu thuẫn nhẹ",
+      "description": "Xử lý bất đồng trong công việc",
+      "difficulty": "khó",
+      "duration": "10 phút",
+      "icon": "⚖️",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**CÁCH GIẢI QUYẾT MÂU THUẪN:**\n\n1. **BÌNH TĨNH** - Không to tiếng\n2. **LẮNG NGHE** - Hiểu quan điểm người khác\n3. **ĐỀ XUẤT** - Đưa ra giải pháp chung"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nĐồng nghiệp dùng máy tính bạn cần.\nAnh ấy nói: \"Còn 5 phút nữa.\"\nNhưng bạn cần gấp.\n\nBạn nên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Giật máy: \"Em cần gấp!\"",
+              "feedback": "❌ Xung đột, mất lịch sự."
+            },
+            {
+              "id": "B",
+              "text": "Dạ, em cũng cần gấp ạ. Anh cho em dùng trước 10 phút được không? Sau đó em trả lại ạ.",
+              "feedback": "✅ *Khéo léo!* Đề xuất giải pháp win-win.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Đi mách sếp",
+              "feedback": "❌ Trẻ con, không tự giải quyết được."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_11",
+      "name": "Quản lý thời gian cơ bản",
+      "description": "Sắp xếp công việc theo thứ tự ưu tiên",
+      "difficulty": "trung bình",
+      "duration": "8 phút",
+      "icon": "⏰",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**QUY TẮC QUẢN LÝ THỜI GIAN:**\n\n1. **LIỆT KÊ** - Viết ra tất cả việc cần làm\n2. **ƯU TIÊN** - Việc quan trọng làm trước\n3. **ƯỚC LƯỢNG** - Dự tính thời gian mỗi việc"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn có 4 việc:\n1. In tài liệu cho sếp (10 phút)\n2. Dọn bàn làm việc (20 phút)\n3. Gọi điện cho khách (15 phút, khách đang chờ)\n4. Uống nước (5 phút)\n\nThứ tự ưu tiên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Dọn bàn → In tài liệu → Gọi điện → Uống nước",
+              "feedback": "❌ Sai! Việc cho sếp và khách nên ưu tiên hơn."
+            },
+            {
+              "id": "B",
+              "text": "In tài liệu → Gọi điện → Dọn bàn → Uống nước",
+              "feedback": "✅ *Đúng!* Ưu tiên việc liên quan người khác trước.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Uống nước → Dọn bàn → In tài liệu → Gọi điện",
+              "feedback": "❌ Ích kỷ, không nghĩ đến người khác."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_12",
+      "name": "Sử dụng email công việc",
+      "description": "Viết email chuyên nghiệp, đúng chuẩn",
+      "difficulty": "trung bình",
+      "duration": "9 phút",
+      "icon": "📧",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**CẤU TRÚC EMAIL CHUẨN:**\n\n1. **TIÊU ĐỀ** - Rõ nội dung\n2. **LỜI CHÀO** - Kính gửi...\n3. **NỘI DUNG** - Ngắn gọn, đủ ý\n4. **KẾT THÚC** - Cảm ơn, ký tên"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn cần xin tài liệu từ phòng nhân sự.\n\nTiêu đề email nào tốt?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Xin tài liệu",
+              "feedback": "❌ Quá chung, không biết tài liệu gì."
+            },
+            {
+              "id": "B",
+              "text": "Xin tài liệu hướng dẫn nội quy công ty",
+              "feedback": "✅ *Tốt!* Rõ ràng, cụ thể.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Cho em xin",
+              "feedback": "❌ Quá suồng sã, không chuyên nghiệp."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_13",
+      "name": "Thuyết trình đơn giản",
+      "description": "Trình bày ý tưởng trước nhóm nhỏ",
+      "difficulty": "khó",
+      "duration": "10 phút",
+      "icon": "🎤",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**BÍ QUYẾT THUYẾT TRÌNH:**\n\n1. **CHUẨN BỊ** - Nội dung rõ ràng\n2. **NÓI CHẬM** - Từ tốn, rõ chữ\n3. **NHÌN MỌI NGƯỜI** - Giao tiếp bằng mắt"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn cần báo cáo kết quả tuần trước 3 người.\n\nKhi bắt đầu, bạn nên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Nhìn xuống đất, nói thật nhanh",
+              "feedback": "❌ Không tự tin, khó nghe."
+            },
+            {
+              "id": "B",
+              "text": "Nhìn mỗi người một lượt, nói: \"Em xin báo cáo kết quả tuần...\"",
+              "feedback": "✅ *Tốt!* Tự tin, giao tiếp bằng mắt.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Đưa giấy cho mọi người tự đọc",
+              "feedback": "❌ Trốn tránh, không dám nói."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_14",
+      "name": "Ghi chú công việc",
+      "description": "Ghi lại thông tin quan trọng",
+      "difficulty": "dễ",
+      "duration": "5 phút",
+      "icon": "📓",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**CÁCH GHI CHÚ HIỆU QUẢ:**\n\n1. **NGHE KỸ** - Tập trung vào điểm chính\n2. **VIẾT TẮT** - Từ khóa quan trọng\n3. **KIỂM TRA** - Đọc lại để chắc đúng"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nSếp dặn: \"Mai em mua 3 hộp giấy A4, 2 bút đỏ, mang theo hóa đơn.\"\n\nGhi chú nào tốt?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Mua đồ",
+              "feedback": "❌ Quá mơ hồ, dễ quên chi tiết."
+            },
+            {
+              "id": "B",
+              "text": "Giấy A4: 3 hộp\nBút đỏ: 2 cái\nHóa đơn",
+              "feedback": "✅ *Hoàn hảo!* Ngắn gọn, đủ ý, dễ nhớ.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Nhớ mua đồ sếp bảo",
+              "feedback": "❌ Không cụ thể, dễ quên."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_15",
+      "name": "Ứng xử với khách hàng",
+      "description": "Tiếp đón, trả lời khách đơn giản",
+      "difficulty": "khó",
+      "duration": "10 phút",
+      "icon": "🤝",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**NGUYÊN TẮC ỨNG XỬ VỚI KHÁCH:**\n\n1. **CHÀO HỎI** - Nụ cười, nhiệt tình\n2. **LẮNG NGHE** - Hiểu nhu cầu khách\n3. **GIẢI ĐÁP** - Trả lời rõ ràng"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nKhách vào cửa hàng, nhìn quanh.\n\nBạn nên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Ngồi im, chờ khách hỏi",
+              "feedback": "❌ Thụ động, không chuyên nghiệp."
+            },
+            {
+              "id": "B",
+              "text": "Chào: \"Anh/chị cần tìm sản phẩm gì ạ?\"",
+              "feedback": "✅ *Chuyên nghiệp!* Chủ động, nhiệt tình.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Hỏi: \"Mua gì?\"",
+              "feedback": "❌ Quá ngắn, thiếu lịch sự."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    },
+    {
+      "id": "skill_16",
+      "name": "Giữ gìn vệ sinh nơi làm việc",
+      "description": "Dọn dẹp, sắp xếp góc làm việc",
+      "difficulty": "dễ",
+      "duration": "5 phút",
+      "icon": "🧹",
+      "steps": [
+        {
+          "step_id": 1,
+          "type": "theory",
+          "content": "**VỆ SINH NƠI LÀM VIỆC:**\n\n1. **BÀN GỌN GÀNG** - Chỉ để đồ cần thiết\n2. **RÁC ĐÚNG CHỖ** - Phân loại rác\n3. **DỌN SAU KHI LÀM** - Trả mọi thứ về chỗ cũ"
+        },
+        {
+          "step_id": 2,
+          "type": "scenario",
+          "content": "**TÌNH HUỐNG:**\nBạn vừa ăn xong bữa trưa tại bàn làm việc.\n\nBạn nên:",
+          "options": [
+            {
+              "id": "A",
+              "text": "Để đấy, tối về dọn",
+              "feedback": "❌ Mất vệ sinh, ảnh hưởng người xung quanh."
+            },
+            {
+              "id": "B",
+              "text": "Bỏ hộp cơm vào thùng rác, lau bàn sạch sẽ",
+              "feedback": "✅ *Tốt!* Có trách nhiệm với không gian chung.",
+              "is_correct": true
+            },
+            {
+              "id": "C",
+              "text": "Đẩy sang bàn bên cạnh",
+              "feedback": "❌ Ích kỷ, đùn đẩy trách nhiệm."
+            }
+          ],
+          "correct_answer": "B"
+        }
+      ]
+    }
+  ],
+  "learning_paths": {
+    "beginner": ["skill_01", "skill_03", "skill_05", "skill_07", "skill_14"],
+    "intermediate": ["skill_02", "skill_04", "skill_06", "skill_10", "skill_13", "skill_16"],
+    "advanced": ["skill_08", "skill_09", "skill_11", "skill_12", "skill_15"]
+  }
+}

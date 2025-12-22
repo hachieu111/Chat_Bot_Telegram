@@ -1,0 +1,16 @@
+{
+  "name": "seed-career-bot",
+  "version": "1.0.0",
+  "description": "Bot dạy kỹ năng nghề nghiệp cho người tự kỷ",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0",
+    "fs": "^0.0.1-security"
+  }
+}
