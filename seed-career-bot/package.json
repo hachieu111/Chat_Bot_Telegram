@@ -1,20 +1,25 @@
 {
   "name": "seed-career-bot",
-  "version": "1.0.0",
-  "description": "Bot dạy kỹ năng nghề nghiệp cho người tự kỷ",
+  "version": "2.0.0",
+  "description": "Bot dạy kỹ năng nghề nghiệp cho người tự kỷ với AI nâng cao",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "dev": "nodemon bot.js"
+    "dev": "nodemon bot.js",
+    "test-api": "node api-test.js",
+    "monitor": "node api-dashboard.js"
   },
   "dependencies": {
+    "node-telegram-bot-api": "^0.61.0",
     "axios": "^1.6.0",
     "dotenv": "^16.3.0",
-    "express": "^5.2.1",
-    "fs": "^0.0.1-security",
-    "node-telegram-bot-api": "^0.61.0"
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["telegram-bot", "autism-support", "ai", "deepseek", "career-coaching"],
+  "author": "SEED Team",
+  "license": "MIT"
 }

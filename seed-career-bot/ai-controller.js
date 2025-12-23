@@ -17,8 +17,31 @@ class AIController {
           too_short: "Câu trả lời hơi ngắn. Thử nói: 'Dạ, em chào cô ạ!'",
           missing_word: "Thiếu từ '{word}'. Thử nói: 'Dạ, em chào cô ạ!'"
         },
-        maxLength: 50
+        maxLength: 50,
+        minLength: 5
       },
+      
+      skill_02: {
+        allowedWords: ["dạ", "ạ", "em", "đã", "xong", "chưa", "mới", "một nửa"],
+        forbiddenWords: ["không biết", "chưa làm", "lười"],
+        templates: {
+          correct: "Dạ, em mới làm được một nửa ạ.",
+          too_short: "Câu trả lời hơi ngắn. Hãy nói rõ tiến độ công việc."
+        },
+        maxLength: 80,
+        minLength: 5
+      },
+      
+      skill_04: {
+        requiredWords: ["xin", "ạ", "cách", "được không"],
+        forbiddenWords: ["gì", "sao", "tại sao", "chỉ"],
+        templates: {
+          correct: "Anh/chị chỉ em cách in tài liệu từ máy tính với máy in này được không ạ?",
+          too_short: "Câu hỏi cần rõ ràng và lịch sự hơn."
+        },
+        maxLength: 80
+      },
+      
       skill_08: {
         allowedWords: ["xin lỗi", "sửa", "hiểu", "ạ", "dạ", "em sẽ", "cảm ơn"],
         forbiddenWords: ["tại", "vì", "đổ lỗi", "bực", "giận", "không phải lỗi em"],
@@ -26,43 +49,72 @@ class AIController {
           correct: "Dạ, em xin lỗi ạ. {person} chỉ giúp em chỗ sai để em sửa ạ."
         },
         maxLength: 100
+      },
+      
+      skill_12: {
+        requiredWords: ["kính gửi", "thân ái", "cảm ơn", "tài liệu", "nội quy"],
+        forbiddenWords: ["hello", "hi", "bye", "cho xin"],
+        templates: {
+          correct: "Xin tài liệu hướng dẫn nội quy công ty",
+          too_short: "Tiêu đề email cần rõ ràng và chuyên nghiệp."
+        },
+        maxLength: 150
       }
     };
   }
 
-  createSafePrompt(skillId, userMessage, context) {
+  getSkillCategory(skillId) {
+    const categories = {
+      'communication': ['skill_01', 'skill_02', 'skill_03', 'skill_04', 'skill_13', 'skill_15'],
+      'professional': ['skill_05', 'skill_06', 'skill_07', 'skill_11', 'skill_12', 'skill_14', 'skill_16'],
+      'problem_solving': ['skill_08', 'skill_10'],
+      'teamwork': ['skill_09']
+    };
+    
+    for (const [category, skills] of Object.entries(categories)) {
+      if (skills.includes(skillId)) return category;
+    }
+    return 'communication';
+  }
+
+  createOptimizedPrompt(skillId, userMessage, context) {
+    const category = this.getSkillCategory(skillId);
     const rule = this.rules[skillId];
     
-    let prompt = `Bạn là trợ lý dạy kỹ năng xã hội cho người Việt Nam.
+    const categoryPrompts = {
+      'communication': "Phân tích kỹ năng giao tiếp. Tập trung vào: lịch sự, rõ ràng, đủ thông tin.",
+      'professional': "Phân tích hành vi chuyên nghiệp. Tập trung vào: trách nhiệm, đúng hạn, báo cáo rõ ràng.",
+      'problem_solving': "Phân tích giải quyết vấn đề. Tập trung vào: bình tĩnh, giải pháp, hợp tác.",
+      'teamwork': "Phân tích làm việc nhóm. Tập trung vào: hỗ trợ, chia sẻ, phối hợp."
+    };
     
-KỸ NĂNG: ${context.skillName}
-TÌNH HUỐNG: ${context.scenario}
+    let prompt = `[HỆ THỐNG PHÂN TÍCH KỸ NĂNG XÃ HỘI]
+Loại kỹ năng: ${categoryPrompts[category]}
+Kỹ năng cụ thể: ${context.skillName}
+Tình huống: ${context.scenario.substring(0, 200)}...
 
-NGƯỜI DÙNG TRẢ LỜI: "${userMessage}"
+Câu trả lời chuẩn: "${context.correctTemplate}"
+Câu người dùng: "${userMessage}"
 
-YÊU CẦU BẮT BUỘC:
-1. CHỈ phân tích dựa trên mẫu: "${context.correctTemplate}"
-2. KHÔNG sáng tạo câu trả lời mới
-3. KHÔNG dùng từ tiếng Anh
-4. KHÔNG dùng từ phức tạp
+YÊU CẦU PHÂN TÍCH (1-2 câu):
+1. Điểm tốt (nếu có)
+2. Điểm cần cải thiện
+3. Gợi ý: "Thử nói: [câu mẫu]"
 
-PHÂN TÍCH NGẮN GỌN (1-2 câu):
-- Điểm đúng: 
-- Điểm cần cải thiện: 
-- Gợi ý: "Thử nói: [câu mẫu]"
-
-GIỌNG VĂN: Thân thiện, động viên, tiếng Việt đơn giản.`;
+Quy tắc ngôn ngữ:
+- Giọng văn: Thân thiện, động viên
+- Ngôn ngữ: Tiếng Việt đơn giản
+- Không sử dụng từ chuyên môn phức tạp`;
 
     if (rule) {
-      prompt += `\n\nQUY TẮC RIÊNG:\n`;
-      if (rule.allowedWords) {
-        prompt += `- Nên dùng: ${rule.allowedWords.slice(0, 5).join(', ')}\n`;
+      if (rule.requiredWords) {
+        prompt += `\nTừ nên có: ${rule.requiredWords.slice(0, 3).join(', ')}`;
       }
       if (rule.forbiddenWords) {
-        prompt += `- KHÔNG dùng: ${rule.forbiddenWords.slice(0, 5).join(', ')}\n`;
+        prompt += `\nTừ nên tránh: ${rule.forbiddenWords.slice(0, 3).join(', ')}`;
       }
     }
-
+    
     return prompt;
   }
 
@@ -71,32 +123,29 @@ GIỌNG VĂN: Thân thiện, động viên, tiếng Việt đơn giản.`;
     if (!rule) return { isValid: true };
 
     const errors = [];
-    
-    // Kiểm tra độ dài
-    if (userMessage.length < 5) {
+    const lowerMessage = userMessage.toLowerCase();
+
+    // Kiểm tra độ dài tối thiểu
+    if (rule.minLength && userMessage.length < rule.minLength) {
       errors.push("quá_ngắn");
     }
-    
-    if (rule.maxLength && userMessage.length > rule.maxLength) {
-      errors.push("quá_dài");
-    }
-    
+
     // Kiểm tra từ cấm
     if (rule.forbiddenWords) {
       for (const word of rule.forbiddenWords) {
-        if (userMessage.toLowerCase().includes(word)) {
+        if (lowerMessage.includes(word.toLowerCase())) {
           errors.push(`từ_cấm:${word}`);
           break;
         }
       }
     }
-    
-    // Kiểm tra từ bắt buộc (với skill_01)
-    if (skillId === 'skill_01') {
-      const required = ['dạ', 'chào', 'ạ'];
-      for (const word of required) {
-        if (!userMessage.toLowerCase().includes(word)) {
+
+    // Kiểm tra từ bắt buộc (nếu có)
+    if (rule.requiredWords) {
+      for (const word of rule.requiredWords) {
+        if (!lowerMessage.includes(word.toLowerCase())) {
           errors.push(`thiếu_từ:${word}`);
+          break;
         }
       }
     }

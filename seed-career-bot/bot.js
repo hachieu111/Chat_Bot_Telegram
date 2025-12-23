@@ -1,13 +1,13 @@
 // File: bot.js
 const TelegramBot = require('node-telegram-bot-api');
-
 const express = require('express');
-
 const config = require('./config');
 const database = require('./database');
 const skillsData = require('./skills.json');
 const deepseek = require('./deepseek');
 const aiController = require('./ai-controller');
+const apiMonitor = require('./api-monitor');
+const rateLimiter = require('./rate-limiter');
 
 // 1. Khởi tạo Express
 const app = express();
@@ -16,24 +16,21 @@ const PORT = process.env.PORT || 3000;
 // 2. Lấy token từ biến môi trường
 const token = process.env.TELEGRAM_TOKEN;
 
-// 3. Kiểm tra token (QUAN TRỌNG)
+// 3. Kiểm tra token
 if (!token) {
     console.error('❌ ERROR: TELEGRAM_TOKEN is not set!');
-    process.exit(1); // Thoát nếu không có token
+    process.exit(1);
 }
 
-
-
-// Khởi tạo bot
+// 4. Khởi tạo bot
 const bot = new TelegramBot(config.TELEGRAM_TOKEN, { 
   polling: true,
   requestTimeout: 60000
 });
 
-
 console.log('🚀 Bot đang khởi động...');
 
-// 5. Middleware để parse JSON
+// 5. Middleware
 app.use(express.json());
 
 // 6. Webhook endpoint
@@ -52,12 +49,20 @@ app.get('/', (req, res) => {
     });
 });
 
-// 8. Khởi động server
+// 8. API Stats endpoint (admin)
+app.get('/api/stats', (req, res) => {
+  const report = apiMonitor.getReport();
+  res.json({
+    ...report,
+    serverTime: new Date().toISOString()
+  });
+});
+
+// 9. Khởi động server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
     console.log(`✅ Bot is ready`);
     
-    // 9. Thiết lập webhook (chỉ khi có domain)
     const webhookUrl = process.env.RENDER_EXTERNAL_URL 
         ? `${process.env.RENDER_EXTERNAL_URL}/bot${token}`
         : null;
@@ -69,6 +74,8 @@ app.listen(PORT, () => {
     } else {
         console.log('⚠️ Running in local mode (no webhook)');
     }
+    
+    console.log(`📊 API Monitor ready at http://localhost:${PORT}/api/stats`);
 });
 
 const skills = skillsData.skills;
@@ -98,6 +105,9 @@ function sendMenu(chatId, userId) {
         [
           { text: "❓ Trợ giúp", callback_data: "help" },
           { text: "ℹ️ Giới thiệu", callback_data: "about" }
+        ],
+        [
+          { text: "📊 API Stats", callback_data: "api_stats" }
         ]
       ]
     },
@@ -143,9 +153,7 @@ function startSkill(chatId, userId, skillId) {
 function sendSkillStep(chatId, userId, skill, stepIndex) {
   const user = database.getUser(userId);
   
-  // Kiểm tra nếu stepIndex vượt quá số step
   if (stepIndex >= skill.steps.length) {
-    // Hoàn thành bài học
     database.completeSkill(userId, skill.id);
     
     bot.sendMessage(chatId, 
@@ -181,7 +189,6 @@ function sendSkillStep(chatId, userId, skill, stepIndex) {
           }]);
         });
         
-        // Thêm nút "Tự gõ câu trả lời" nếu có AI
         if (step.ai_controlled && config.ENABLE_AI) {
           buttons.push([{
             text: "💬 Tự gõ câu trả lời (AI hỗ trợ)",
@@ -200,7 +207,6 @@ function sendSkillStep(chatId, userId, skill, stepIndex) {
           }]);
         });
       } else {
-        // Thêm nút tiếp tục mặc định nếu không có nút nào
         const nextStep = stepIndex + 1;
         if (nextStep < skill.steps.length) {
           buttons.push([{
@@ -216,7 +222,6 @@ function sendSkillStep(chatId, userId, skill, stepIndex) {
       }
   }
 
-  // Thêm nút điều hướng (Lùi lại chỉ hiện nếu không phải step đầu)
   if (stepIndex > 0) {
     buttons.push([
       { text: "🔙 Lùi lại", callback_data: `skill_${skill.id}_step_${stepIndex - 1}` },
@@ -233,7 +238,6 @@ function sendSkillStep(chatId, userId, skill, stepIndex) {
     reply_markup: { inline_keyboard: buttons }
   });
 
-  // Cập nhật step hiện tại
   database.updateUser(userId, { currentStep: stepIndex });
 }
 
@@ -262,7 +266,6 @@ bot.onText(/\/start/, (msg) => {
 
   bot.sendMessage(chatId, welcomeText, { parse_mode: 'Markdown' });
 
-  // Hỏi tên nếu chưa có
   setTimeout(() => {
     const user = database.getUser(userId);
     if (!user.name) {
@@ -307,10 +310,8 @@ bot.on('message', async (msg) => {
 
   const user = database.getUser(userId);
   
-  // Nếu user đang trong chế độ free response của bài học
   if (user.currentSkill && user.aiMode === 'free_response') {
     
-    // Kiểm tra số lần dùng AI
     const aiCount = database.incrementAIUsage(userId);
     if (aiCount > config.MAX_AI_REQUESTS_PER_USER) {
       bot.sendMessage(chatId, 
@@ -324,24 +325,30 @@ bot.on('message', async (msg) => {
 
     if (!step || !step.ai_controlled) return;
 
-    // Hiển thị "đang phân tích"
+    // Kiểm tra rate limiting
+    const limitCheck = rateLimiter.checkLimit(userId, skill.id, 100);
+    if (!limitCheck.allowed) {
+      bot.sendMessage(chatId, `⚠️ ${limitCheck.reason}. Vui lòng thử lại sau.`);
+      return;
+    }
+
     const analyzingMsg = await bot.sendMessage(chatId, "🤖 AI đang phân tích câu trả lời của bạn...");
 
     try {
-      // Kiểm tra với AI Controller trước
       const validation = aiController.validateUserResponse(user.currentSkill, text);
       
       let aiResponse;
       if (!validation.isValid && config.AI_MODE === 'controlled') {
-        // Dùng template thay vì gọi AI
         aiResponse = {
           content: `💡 *Gợi ý:*\n\n` +
                    `Câu trả lời ${validation.errors.includes('quá_ngắn') ? 'hơi ngắn' : 'có thể cải thiện'}.\n` +
                    `**Thử nói:** ${validation.suggestedTemplate || step.correct_answer_text}`,
           tokens: 0
         };
+        
+        // Track validation-only response
+        apiMonitor.trackCall(user.currentSkill, 0, true);
       } else {
-        // Gọi DeepSeek AI
         const context = {
           skillName: skill.name,
           scenario: step.content,
@@ -351,10 +358,8 @@ bot.on('message', async (msg) => {
         aiResponse = await deepseek.analyzeResponse(user.currentSkill, text, context);
       }
 
-      // Xóa message "đang phân tích"
       await bot.deleteMessage(chatId, analyzingMsg.message_id);
 
-      // Gửi phản hồi
       const responseText = `💡 *PHÂN TÍCH AI:*\n\n${aiResponse.content}\n\n` +
                           `📝 *Câu mẫu tốt:*\n"${step.correct_answer_text}"`;
 
@@ -368,12 +373,14 @@ bot.on('message', async (msg) => {
         reply_markup: { inline_keyboard: buttons }
       });
 
-      // Tắt chế độ free response
       database.updateUser(userId, { aiMode: null });
 
     } catch (error) {
       console.error('❌ Lỗi phân tích AI:', error);
       await bot.deleteMessage(chatId, analyzingMsg.message_id);
+      
+      // Track failed call
+      apiMonitor.trackCall(user.currentSkill, 0, false);
       
       bot.sendMessage(chatId, 
         "❌ Có lỗi khi phân tích. Hãy thử chọn đáp án có sẵn nhé!\n\n" +
@@ -384,7 +391,7 @@ bot.on('message', async (msg) => {
   }
 });
 
-// Xử lý callback queries (khi bấm nút) - ĐÃ THÊM XỬ LÝ ĐẦY ĐỦ
+// Xử lý callback queries
 bot.on('callback_query', async (callbackQuery) => {
   const msg = callbackQuery.message;
   const chatId = msg.chat.id;
@@ -393,10 +400,8 @@ bot.on('callback_query', async (callbackQuery) => {
 
   console.log(`🔘 Callback: ${data} từ user ${userId}`);
 
-  // Xóa "đang gõ..." trên Telegram
   await bot.answerCallbackQuery(callbackQuery.id);
 
-  // Xử lý các callback - THÊM TẤT CẢ CÁC CALLBACK
   if (data === 'main_menu') {
     sendMenu(chatId, userId);
   }
@@ -404,27 +409,22 @@ bot.on('callback_query', async (callbackQuery) => {
     sendSkillMenu(chatId, userId);
   }
   else if (data === 'continue_learning') {
-    // Tiếp tục học: Tìm skill cuối cùng đang học hoặc chưa hoàn thành
     const user = database.getUser(userId);
     let skillToContinue = null;
     
-    // Nếu có skill đang học dở
     if (user.currentSkill) {
       skillToContinue = skills.find(s => s.id === user.currentSkill);
     }
     
-    // Nếu không, tìm skill đầu tiên chưa học
     if (!skillToContinue) {
       const completed = user.completedSkills || [];
       skillToContinue = skills.find(skill => !completed.includes(skill.id));
     }
     
     if (skillToContinue) {
-      // Nếu có skill đang học, tiếp tục từ step hiện tại
       const startStep = user.currentSkill === skillToContinue.id ? user.currentStep : 0;
       sendSkillStep(chatId, userId, skillToContinue, startStep);
     } else {
-      // Nếu tất cả đã hoàn thành
       bot.sendMessage(chatId, 
         `🎉 *XIN CHÚC MỪNG!*\n\nBạn đã hoàn thành tất cả kỹ năng!\n\nChờ các bài học mới nhé!`, {
         parse_mode: 'Markdown',
@@ -435,7 +435,6 @@ bot.on('callback_query', async (callbackQuery) => {
     }
   }
   else if (data === 'achievements') {
-    // Hiển thị thành tích
     const user = database.getUser(userId);
     const completed = user.completedSkills?.length || 0;
     const total = skills.length;
@@ -444,7 +443,6 @@ bot.on('callback_query', async (callbackQuery) => {
     achievementsText += `✅ Đã hoàn thành: ${completed}/${total} kỹ năng\n\n`;
     
     if (completed > 0) {
-      // Tính điểm trung bình
       let totalScore = 0;
       let count = 0;
       Object.keys(user.scores || {}).forEach(skillId => {
@@ -456,7 +454,6 @@ bot.on('callback_query', async (callbackQuery) => {
       achievementsText += `📊 Điểm trung bình: ${avgScore}/100\n`;
       achievementsText += `🤖 Số lần dùng AI: ${user.aiUsageCount || 0}\n\n`;
       
-      // Danh hiệu
       if (completed >= total) {
         achievementsText += `👑 *DANH HIỆU: BẬC THẦY GIAO TIẾP*\n`;
       } else if (completed >= total * 0.7) {
@@ -481,7 +478,6 @@ bot.on('callback_query', async (callbackQuery) => {
     });
   }
   else if (data === 'about') {
-    // Giới thiệu về bot
     const aboutText = `ℹ️ *GIỚI THIỆU VỀ SEED CAREER COACH*\n\n` +
                      `🤖 *Tên bot:* SEED Career Coach\n` +
                      `🎯 *Mục tiêu:* Hỗ trợ người tự kỷ phát triển kỹ năng xã hội\n` +
@@ -500,6 +496,34 @@ bot.on('callback_query', async (callbackQuery) => {
         inline_keyboard: [[{ text: "🏠 Menu chính", callback_data: "main_menu" }]]
       }
     });
+  }
+  else if (data === 'api_stats') {
+    const adminIds = config.ADMIN_IDS;
+    if (adminIds.includes(userId.toString())) {
+      const report = apiMonitor.getReport();
+      const reportText = `📊 *API USAGE REPORT*
+      
+Total Calls: ${report.totalCalls}
+Total Tokens: ${report.totalTokens}
+Success Rate: ${report.successRate}
+Avg Tokens/Call: ${report.avgTokensPerCall}
+Estimated Cost: $${report.estimatedCost.toFixed(4)}
+
+*By Skill:*`;
+      
+      let skillDetails = '';
+      Object.entries(report.bySkill).forEach(([skillId, data]) => {
+        skillDetails += `\n${skillId}: ${data.calls} calls, ${data.tokens} tokens`;
+      });
+      
+      bot.sendMessage(chatId, reportText + skillDetails, {
+        parse_mode: 'Markdown'
+      });
+    } else {
+      bot.sendMessage(chatId, "❌ Chỉ admin mới có quyền xem thống kê API.", {
+        parse_mode: 'Markdown'
+      });
+    }
   }
   else if (data.startsWith('view_skill_')) {
     const skillId = data.replace('view_skill_', '');
@@ -532,9 +556,7 @@ bot.on('callback_query', async (callbackQuery) => {
     const skillId = data.replace('start_skill_', '');
     startSkill(chatId, userId, skillId);
   }
-  // Xử lý callback từ skills.json: skill_01_step_2, skill_01_step_3, ...
   else if (data.startsWith('skill_') && data.includes('_step_')) {
-    // Pattern 1: skill_01_step_2 (từ skills.json)
     const jsonMatch = data.match(/skill_(\d+)_step_(\d+)/);
     if (jsonMatch) {
       const [, skillNum, stepNum] = jsonMatch;
@@ -542,7 +564,6 @@ bot.on('callback_query', async (callbackQuery) => {
       const skill = skills.find(s => s.id === skillId);
       
       if (skill) {
-        // JSON step bắt đầu từ 1, code bắt đầu từ 0
         const stepIndex = parseInt(stepNum) - 1;
         console.log(`📖 Xử lý callback từ JSON: ${data} -> skill ${skillId}, step ${stepIndex}`);
         
@@ -552,7 +573,6 @@ bot.on('callback_query', async (callbackQuery) => {
       }
     }
     
-    // Pattern 2: skill_skill_01_step_1 (từ code)
     const codeMatch = data.match(/skill_(skill_\d+)_step_(\d+)/);
     if (codeMatch) {
       const [, skillId, stepIndex] = codeMatch;
@@ -568,7 +588,6 @@ bot.on('callback_query', async (callbackQuery) => {
       }
     }
   }
-  // Xử lý hoàn thành skill: skill_01_complete
   else if (data.endsWith('_complete')) {
     const skillId = data.replace('_complete', '');
     console.log(`✅ User ${userId} hoàn thành ${skillId}`);
@@ -590,7 +609,6 @@ bot.on('callback_query', async (callbackQuery) => {
       });
     }
   }
-  // Xử lý next_skill
   else if (data === 'next_skill') {
     console.log(`➡️ User ${userId} chọn next_skill`);
     const user = database.getUser(userId);
@@ -610,17 +628,14 @@ bot.on('callback_query', async (callbackQuery) => {
       });
     }
   }
-  // Xử lý skill_01_more_practice
   else if (data === 'skill_01_more_practice') {
     console.log(`🔄 User ${userId} muốn thực hành thêm skill_01`);
     const skill = skills.find(s => s.id === 'skill_01');
     if (skill) {
-      // Quay lại step thực hành (step 4 - index 3)
       sendSkillStep(chatId, userId, skill, 3);
     }
   }
   else if (data.startsWith('free_response_')) {
-    // Vào chế độ tự gõ câu trả lời với AI
     const match = data.match(/free_response_(.+)_(\d+)/);
     if (match) {
       const [, skillId, stepIndex] = match;
@@ -645,7 +660,6 @@ bot.on('callback_query', async (callbackQuery) => {
     }
   }
   else if (data.startsWith('answer_')) {
-    // Xử lý khi chọn đáp án A/B/C
     const match = data.match(/answer_(.+)_(\d+)_(.+)/);
     if (match) {
       const [, skillId, stepIndex, answerId] = match;
@@ -685,7 +699,6 @@ bot.on('callback_query', async (callbackQuery) => {
     }
   }
   else if (data.startsWith('hint_')) {
-    // Hiển thị gợi ý từ AI - ĐÃ SỬA LỖI REGEX
     const match = data.match(/hint_(.+)_(\d+)/);
     if (match) {
       const [, skillId, stepIndex] = match;
@@ -721,14 +734,12 @@ bot.on('callback_query', async (callbackQuery) => {
     }
   }
   else if (data.startsWith('retry_')) {
-    // Thử lại với câu khác
     const match = data.match(/retry_(.+)_(\d+)/);
     if (match) {
       const [, skillId, stepIndex] = match;
       const skill = skills.find(s => s.id === skillId);
       
       if (skill) {
-        // Vào chế độ free response để thử lại
         database.updateUser(userId, { 
           aiMode: 'free_response',
           currentSkill: skillId,
@@ -804,7 +815,6 @@ bot.on('callback_query', async (callbackQuery) => {
       }
     });
   }
-  // Xử lý callback không xác định
   else {
     console.log(`❓ Callback không xác định: ${data}`);
     bot.sendMessage(chatId, 
@@ -856,3 +866,4 @@ bot.on('webhook_error', (error) => {
 console.log('✅ Bot đã sẵn sàng!');
 console.log('🤖 AI Mode:', config.AI_MODE);
 console.log('👤 Test bot tại: @seed_career_coach_bot');
+console.log('📊 API Monitor endpoint: /api/stats');

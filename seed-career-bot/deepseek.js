@@ -16,6 +16,41 @@ class DeepSeekAI {
     }
   }
 
+  async callAPIWithRetry(prompt, maxRetries = 2) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        const response = await axios.post(
+          this.apiUrl,
+          {
+            model: "deepseek-chat",
+            messages: [{ role: "user", content: prompt }],
+            temperature: 0.3,
+            max_tokens: 150,
+            stream: false
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${this.apiKey}`,
+              'Content-Type': 'application/json'
+            },
+            timeout: 8000
+          }
+        );
+        
+        return {
+          content: response.data.choices[0].message.content,
+          tokens: response.data.usage.total_tokens
+        };
+      } catch (error) {
+        console.error(`❌ Lỗi API (lần ${attempt + 1}):`, error.message);
+        
+        if (attempt === maxRetries - 1) throw error;
+        
+        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+      }
+    }
+  }
+
   async analyzeResponse(skillId, userMessage, context) {
     if (!this.enabled) {
       return {
@@ -24,7 +59,6 @@ class DeepSeekAI {
       };
     }
 
-    // Kiểm tra cache trước
     const cacheKey = `${skillId}:${userMessage.toLowerCase().trim()}`;
     const cached = aiController.getCachedResponse(cacheKey);
     if (cached) {
@@ -33,49 +67,25 @@ class DeepSeekAI {
     }
 
     try {
-      // Tạo prompt an toàn
-      const safePrompt = aiController.createSafePrompt(skillId, userMessage, context);
+      const safePrompt = aiController.createOptimizedPrompt(skillId, userMessage, context);
+      const result = await this.callAPIWithRetry(safePrompt);
       
-      const response = await axios.post(
-        this.apiUrl,
-        {
-          model: "deepseek-chat",
-          messages: [
-            { role: "system", content: safePrompt },
-            { role: "user", content: userMessage }
-          ],
-          temperature: 0.3, // Thấp để ít sáng tạo
-          max_tokens: 200,
-          stream: false
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${this.apiKey}`,
-            'Content-Type': 'application/json'
-          },
-          timeout: 10000 // 10 giây timeout
-        }
-      );
-
-      const result = {
-        content: response.data.choices[0].message.content,
-        tokens: response.data.usage.total_tokens
-      };
-
-      // Lưu vào cache
+      if (result.content.length > 500) {
+        result.content = result.content.substring(0, 500) + "...";
+      }
+      
       aiController.cacheResponse(cacheKey, result);
       
       console.log(`🤖 Đã dùng ${result.tokens} tokens`);
       return result;
-
-    } catch (error) {
-      console.error('❌ Lỗi DeepSeek API:', error.message);
       
-      // Fallback: dùng template cứng
+    } catch (error) {
+      console.error('❌ Lỗi DeepSeek API sau khi retry:', error.message);
+      
       const validation = aiController.validateUserResponse(skillId, userMessage);
       if (!validation.isValid && validation.suggestedTemplate) {
         return {
-          content: `Câu trả lời ${validation.errors.join(', ')}.\n\nHãy thử: **${validation.suggestedTemplate}**`,
+          content: `💡 *Gợi ý:*\n\nCâu trả lời ${validation.errors.join(', ')}.\n\n**Thử nói:** ${validation.suggestedTemplate}`,
           tokens: 0
         };
       }
@@ -88,7 +98,6 @@ class DeepSeekAI {
   }
 
   async generateHint(skillId, question, attempts) {
-    // Tương tự như trên, tạo prompt cho gợi ý
     const prompt = `Đưa ra gợi ý cho câu hỏi: "${question}"
     
 Người học đã sai ${attempts} lần.
@@ -98,23 +107,28 @@ Gợi ý phải:
 - KHÔNG tiết lộ đáp án
 - Bằng tiếng Việt đơn giản`;
 
-    const response = await axios.post(
-      this.apiUrl,
-      {
-        model: "deepseek-chat",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.4,
-        max_tokens: 100
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${this.apiKey}`,
-          'Content-Type': 'application/json'
+    try {
+      const response = await axios.post(
+        this.apiUrl,
+        {
+          model: "deepseek-chat",
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.4,
+          max_tokens: 100
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json'
+          }
         }
-      }
-    );
+      );
 
-    return response.data.choices[0].message.content;
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      console.error('❌ Lỗi tạo gợi ý:', error);
+      return "Hãy đọc kỹ câu hỏi và thử trả lời với đầy đủ thông tin nhé!";
+    }
   }
 }
 
