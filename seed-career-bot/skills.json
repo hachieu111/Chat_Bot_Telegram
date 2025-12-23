@@ -155,12 +155,26 @@
               "feedback": "❌ Quá mơ hồ, không chuyên nghiệp."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
         },
         {
           "step_id": 5,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy tưởng tượng một tình huống khác mà bạn cần duy trì hội thoại trong công việc.\n\n💡 Gợi ý: Nhớ 3 bước: Lắng nghe → Trả lời → Hỏi lại",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_02_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_02_more_practice"}
+          ]
+        },
+        {
+          "step_id": 6,
           "type": "summary",
-          "content": "🎉 *HOÀN THÀNH KỸ NĂNG 2!*\n\n**TÓM TẮT:**\n• Trả lời trung thực, đủ thông tin\n• Ước lượng thời gian cụ thể\n• Thể hiện thái độ tích cực\n\n**CÂU MẪU:**\n\"Dạ, em đang làm được 50% ạ.\"\n\"Khoảng 2 ngày nữa ạ. Em sẽ báo cáo tiến độ.\""
+          "content": "🎉 *HOÀN THÀNH KỸ NĂNG 2!*\n\n**TÓM TẮT:**\n• Trả lời trung thực, đủ thông tin\n• Ước lượng thời gian cụ thể\n• Thể hiện thái độ tích cực\n\n**CÂU MẪU:**\n\"Dạ, em đang làm được 50% ạ.\"\n\"Khoảng 2 ngày nữa ạ. Em sẽ báo cáo tiến độ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -171,14 +185,29 @@
       "difficulty": "dễ",
       "duration": "6 phút",
       "icon": "👂",
+       "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**3 BƯỚC LẮNG NGHE TÍCH CỰC:**\n\n1. **DỪNG LẠI** - Ngừng việc đang làm\n2. **NHÌN** - Nhìn vào người nói\n3. **IM LẶNG** - Không ngắt lời, không nói chuyện riêng"
+          "type": "introduction",
+          "content": "👂 *KỸ NĂNG 3: LẮNG NGHE TÍCH CỰC*\n\nChào bạn! Hôm nay chúng ta học cách lắng nghe tích cực tại nơi làm việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_03_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**3 BƯỚC LẮNG NGHE TÍCH CỰC:**\n\n1. **DỪNG LẠI** - Ngừng việc đang làm\n2. **NHÌN** - Nhìn vào người nói\n3. **IM LẶNG** - Không ngắt lời, không nói chuyện riêng",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_03_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nTrong lớp handmade, bạn đang cắt giấy.\nCô giáo gọi cả lớp: *\"Các em nghe cô hướng dẫn bước mới nhé.\"*\n\nBạn nên làm gì?",
           "options": [
@@ -199,7 +228,26 @@
               "is_correct": true
             }
           ],
+         "ai_controlled": true,
           "correct_answer": "C"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy thử áp dụng lắng nghe tích cực trong cuộc sống hàng ngày.\n\n💡 Gợi ý: Khi ai đó nói chuyện với bạn, hãy dừng việc đang làm và nhìn vào họ.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_03_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_03_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Dừng việc đang làm khi người khác nói\n• Nhìn vào người nói\n• Không ngắt lời, không nói chuyện riêng\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em đang lắng nghe ạ.\"\n\"Vâng, em hiểu rồi ạ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -210,14 +258,30 @@
       "difficulty": "trung bình",
       "duration": "6 phút",
       "icon": "❓",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**CÁCH ĐẶT CÂU HỎI TỐT:**\n\n1. **XÁC ĐỊNH** - Mình muốn biết điều gì?\n2. **DIỄN ĐẠT** - Nói ngắn gọn, rõ ràng\n3. **LỊCH SỰ** - Thêm 'ạ', 'xin', 'làm ơn'"
+          "type": "introduction",
+          "content": "❓ *KỸ NĂNG 4: ĐẶT CÂU HỎI RÕ RÀNG*\n\nChào bạn! Hôm nay chúng ta học cách đặt câu hỏi rõ ràng trong công việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_04_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**CÁCH ĐẶT CÂU HỎI TỐT:**\n\n1. **XÁC ĐỊNH** - Mình muốn biết điều gì?\n2. **DIỄN ĐẠT** - Nói ngắn gọn, rõ ràng\n3. **LỊCH SỰ** - Thêm 'ạ', 'xin', 'làm ơn'",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_04_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn không biết cách sử dụng máy in.\n\nCâu hỏi nào tốt hơn?",
           "options": [
@@ -238,7 +302,26 @@
               "feedback": "❌ Quá ngắn, thiếu lịch sự."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nThử nghĩ ra một câu hỏi rõ ràng về công việc hàng ngày của bạn.\n\n💡 Gợi ý: Xác định điều bạn muốn biết, diễn đạt ngắn gọn và thêm từ lịch sự.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_04_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_04_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Xác định rõ điều muốn hỏi\n• Diễn đạt ngắn gọn, rõ ràng\n• Thêm từ lịch sự: 'ạ', 'xin', 'làm ơn'\n\n**CÂU MẪU CẦN NHỚ:**\n\"Anh/chị có thể hướng dẫn em cách làm việc này được không ạ?\"\n\"Xin hỏi, thời hạn nộp báo cáo là khi nào ạ?\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -249,14 +332,30 @@
       "difficulty": "dễ",
       "duration": "5 phút",
       "icon": "📝",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**3 BƯỚC NHẬN CHỈ DẪN:**\n\n1. **NGHE KỸ** - Tập trung nghe hết câu\n2. **NHẮC LẠI** - Lặp lại để kiểm tra\n3. **LÀM NGAY** - Thực hiện không trì hoãn"
+          "type": "introduction",
+          "content": "📝 *KỸ NĂNG 5: NHẬN VÀ THỰC HIỆN CHỈ DẪN*\n\nChào bạn! Hôm nay chúng ta học cách nhận và thực hiện chỉ dẫn trong công việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_05_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**3 BƯỚC NHẬN CHỈ DẪN:**\n\n1. **NGHE KỸ** - Tập trung nghe hết câu\n2. **NHẮC LẠI** - Lặp lại để kiểm tra\n3. **LÀM NGAY** - Thực hiện không trì hoãn",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_05_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nCô giáo nói: *\"Em lấy cho cô 5 tờ giấy màu xanh ở tủ thứ 2 nhé.\"*\n\nBạn nên làm gì đầu tiên?",
           "options": [
@@ -278,6 +377,24 @@
             }
           ],
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nKhi nhận chỉ dẫn từ ai đó, hãy thử nhắc lại để kiểm tra thông tin.\n\n💡 Gợi ý: \"Dạ, em hiểu là [lặp lại chỉ dẫn] phải không ạ?\"",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_05_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_05_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Nghe kỹ toàn bộ chỉ dẫn\n• Nhắc lại để xác nhận\n• Thực hiện ngay không trì hoãn\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em hiểu là [lặp lại chỉ dẫn] ạ.\"\n\"Vâng, em sẽ làm ngay ạ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -288,14 +405,30 @@
       "difficulty": "trung bình",
       "duration": "7 phút",
       "icon": "📊",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**CẤU TRÚC BÁO CÁO:**\n\n1. **KẾT QUẢ** - Đã làm được gì?\n2. **VẤN ĐỀ** - Gặp khó khăn gì?\n3. **KẾ HOẠCH** - Sẽ làm gì tiếp?"
+          "type": "introduction",
+          "content": "📊 *KỸ NĂNG 6: BÁO CÁO CÔNG VIỆC*\n\nChào bạn! Hôm nay chúng ta học cách báo cáo công việc chuyên nghiệp.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_06_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**CẤU TRÚC BÁO CÁO:**\n\n1. **KẾT QUẢ** - Đã làm được gì?\n2. **VẤN ĐỀ** - Gặp khó khăn gì?\n3. **KẾ HOẠCH** - Sẽ làm gì tiếp?",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_06_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn được giao dọn 3 kệ hàng trong 3 giờ.\nĐã 2 giờ, bạn dọn xong 2 kệ.\n\nKhi sếp hỏi, bạn nói:",
           "options": [
@@ -316,7 +449,26 @@
               "feedback": "❌ Quá sơ sài, không chuyên nghiệp."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nThử báo cáo công việc bạn đang làm theo cấu trúc: Kết quả - Vấn đề - Kế hoạch.\n\n💡 Gợi ý: \"Dạ, em đã [kết quả], gặp [vấn đề], và sẽ [kế hoạch] ạ.\"",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_06_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_06_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Báo cáo đầy đủ: kết quả, vấn đề, kế hoạch\n• Cung cấp thông tin cụ thể về thời gian\n• Thể hiện thái độ tích cực, chủ động\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em đã hoàn thành 70% công việc, gặp chút khó khăn về [vấn đề], và sẽ cố gắng hoàn thành trong [thời gian] ạ.\"\n\"Em xin báo cáo tiến độ công việc...\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -327,14 +479,30 @@
       "difficulty": "dễ",
       "duration": "5 phút",
       "icon": "🙏",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**XIN PHÉP ĐÚNG CÁCH:**\n\n1. **LỊCH SỰ** - Dạ, thưa, ạ\n2. **RÕ RÀNG** - Xin việc gì, trong bao lâu\n3. **CHẤP NHẬN** - Nếu không được, không cáu"
+          "type": "introduction",
+          "content": "🙏 *KỸ NĂNG 7: XIN PHÉP VÀ CẢM ƠN*\n\nChào bạn! Hôm nay chúng ta học cách xin phép và cảm ơn đúng cách tại nơi làm việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_07_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**XIN PHÉP ĐÚNG CÁCH:**\n\n1. **LỊCH SỰ** - Dạ, thưa, ạ\n2. **RÕ RÀNG** - Xin việc gì, trong bao lâu\n3. **CHẤP NHẬN** - Nếu không được, không cáu",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_07_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn muốn về sớm 30 phút vì bị đau đầu.\n\nCâu nào tốt nhất?",
           "options": [
@@ -355,7 +523,26 @@
               "feedback": "❌ Nghe như than vãn, không tôn trọng."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy thử xin phép cho một tình huống khác trong công việc.\n\n💡 Gợi ý: Nhớ ba yếu tố: lịch sự, rõ ràng, chấp nhận.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_07_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_07_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Xin phép một cách lịch sự với đầy đủ thông tin\n• Cảm ơn chân thành khi được giúp đỡ\n• Chấp nhận khi không được đồng ý\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em xin phép [việc cần xin] vì [lý do] ạ.\"\n\"Em cảm ơn anh/chị rất nhiều ạ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -370,14 +557,26 @@
         "allow_free_response": true,
         "max_ai_interactions": 3
       },
+      
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**3 BƯỚC VÀNG KHI BỊ PHÊ BÌNH:**\n\n1. **BÌNH TĨNH** - Hít thở sâu\n2. **LẮNG NGHE** - Nghe hết ý\n3. **PHẢN HỒI** - Nhẹ nhàng, tích cực"
+          "type": "introduction",
+          "content": "🎯 *KỸ NĂNG 8: ỨNG XỬ KHI BỊ GÓP Ý - PHÊ BÌNH*\n\nChào bạn! Hôm nay chúng ta học cách ứng xử khi nhận góp ý hoặc phê bình.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_08_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**3 BƯỚC VÀNG KHI BỊ PHÊ BÌNH:**\n\n1. **BÌNH TĨNH** - Hít thở sâu\n2. **LẮNG NGHE** - Nghe hết ý\n3. **PHẢN HỒI** - Nhẹ nhàng, tích cực",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_08_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG (Nhập vai):**\n\n*(Bot đóng vai Trưởng nhóm)*\n\"Lan này, báo cáo tuần này có lỗi chính tả. Anh hơi lo.\"\n\n*(Bạn là Lan)*\nBạn sẽ phản ứng thế nào?",
           "options": [
@@ -406,6 +605,24 @@
           "ai_controlled": true,
           "correct_answer": "4",
           "correct_answer_text": "Dạ, em xin lỗi ạ. Anh chỉ giúp em chỗ sai để em sửa ạ."
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy nghĩ về một tình huống bạn nhận được góp ý và thử phản hồi tích cực.\n\n💡 Gợi ý: Luôn bình tĩnh, lắng nghe và đưa ra phản hồi xây dựng.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_08_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_08_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Giữ bình tĩnh khi bị phê bình\n• Lắng nghe toàn bộ ý kiến\n• Phản hồi nhẹ nhàng, tích cực và có trách nhiệm\n\n**CÂU MẪU CẦN NHỚ:**\n\"Dạ, em xin lỗi vì [lỗi]. Em sẽ sửa ngay ạ.\"\n\"Cảm ơn anh/chị đã góp ý, em sẽ cố gắng hơn ạ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -416,14 +633,30 @@
       "difficulty": "trung bình",
       "duration": "8 phút",
       "icon": "👥",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**NGUYÊN TẮC LÀM VIỆC NHÓM:**\n\n1. **PHÂN CÔNG** - Rõ ai làm việc gì\n2. **HỖ TRỢ** - Giúp đỡ khi cần\n3. **CHIA SẺ** - Thông tin kịp thời"
+          "type": "introduction",
+          "content": "👥 *KỸ NĂNG 9: LÀM VIỆC NHÓM HIỆU QUẢ*\n\nChào bạn! Hôm nay chúng ta học cách làm việc nhóm hiệu quả.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_09_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**NGUYÊN TẮC LÀM VIỆC NHÓM:**\n\n1. **PHÂN CÔNG** - Rõ ai làm việc gì\n2. **HỖ TRỢ** - Giúp đỡ khi cần\n3. **CHIA SẺ** - Thông tin kịp thời",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_09_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nNhóm 3 người làm dự án. Bạn làm xong phần mình sớm.\n\nBạn nên:",
           "options": [
@@ -444,7 +677,26 @@
               "feedback": "❌ Tiêu cực, gây mất đoàn kết."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nTrong nhóm làm việc, hãy chủ động hỗ trợ đồng đội khi có thể.\n\n💡 Gợi ý: \"Mình có thể giúp gì cho bạn không?\"",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_09_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_09_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Phân công công việc rõ ràng\n• Hỗ trợ lẫn nhau khi cần\n• Chia sẻ thông tin kịp thời\n\n**CÂU MẪU CẦN NHỚ:**\n\"Chúng ta phân công như thế này nhé.\"\n\"Tôi có thể giúp bạn phần đó.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -455,14 +707,30 @@
       "difficulty": "khó",
       "duration": "10 phút",
       "icon": "⚖️",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**CÁCH GIẢI QUYẾT MÂU THUẪN:**\n\n1. **BÌNH TĨNH** - Không to tiếng\n2. **LẮNG NGHE** - Hiểu quan điểm người khác\n3. **ĐỀ XUẤT** - Đưa ra giải pháp chung"
+          "type": "introduction",
+          "content": "⚖️ *KỸ NĂNG 10: GIẢI QUYẾT MÂU THUẪN NHẸ*\n\nChào bạn! Hôm nay chúng ta học cách giải quyết mâu thuẫn nhẹ trong công việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_10_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**CÁCH GIẢI QUYẾT MÂU THUẪN:**\n\n1. **BÌNH TĨNH** - Không to tiếng\n2. **LẮNG NGHE** - Hiểu quan điểm người khác\n3. **ĐỀ XUẤT** - Đưa ra giải pháp chung",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_10_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nĐồng nghiệp dùng máy tính bạn cần.\nAnh ấy nói: \"Còn 5 phút nữa.\"\nNhưng bạn cần gấp.\n\nBạn nên:",
           "options": [
@@ -483,7 +751,26 @@
               "feedback": "❌ Trẻ con, không tự giải quyết được."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nKhi có mâu thuẫn, hãy thử áp dụng 3 bước: bình tĩnh, lắng nghe, đề xuất.\n\n💡 Gợi ý: \"Mình cùng tìm giải pháp chung nhé.\"",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_10_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_10_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Giữ bình tĩnh, không nóng giận\n• Lắng nghe để hiểu quan điểm đối phương\n• Đề xuất giải pháp cùng có lợi\n\n**CÂU MẪU CẦN NHỚ:**\n\"Chúng ta cùng bình tĩnh tìm cách giải quyết nhé.\"\n\"Tôi hiểu ý bạn, nhưng tôi nghĩ cách này có thể tốt hơn.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -494,14 +781,30 @@
       "difficulty": "trung bình",
       "duration": "8 phút",
       "icon": "⏰",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**QUY TẮC QUẢN LÝ THỜI GIAN:**\n\n1. **LIỆT KÊ** - Viết ra tất cả việc cần làm\n2. **ƯU TIÊN** - Việc quan trọng làm trước\n3. **ƯỚC LƯỢNG** - Dự tính thời gian mỗi việc"
+          "type": "introduction",
+          "content": "⏰ *KỸ NĂNG 11: QUẢN LÝ THỜI GIAN CƠ BẢN*\n\nChào bạn! Hôm nay chúng ta học cách quản lý thời gian hiệu quả.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_11_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**QUY TẮC QUẢN LÝ THỜI GIAN:**\n\n1. **LIỆT KÊ** - Viết ra tất cả việc cần làm\n2. **ƯU TIÊN** - Việc quan trọng làm trước\n3. **ƯỚC LƯỢNG** - Dự tính thời gian mỗi việc",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_11_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn có 4 việc:\n1. In tài liệu cho sếp (10 phút)\n2. Dọn bàn làm việc (20 phút)\n3. Gọi điện cho khách (15 phút, khách đang chờ)\n4. Uống nước (5 phút)\n\nThứ tự ưu tiên:",
           "options": [
@@ -522,7 +825,26 @@
               "feedback": "❌ Ích kỷ, không nghĩ đến người khác."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy liệt kê công việc của bạn hôm nay và sắp xếp theo thứ tự ưu tiên.\n\n💡 Gợi ý: Việc quan trọng và khẩn cấp làm trước.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_11_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_11_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Liệt kê tất cả công việc cần làm\n• Sắp xếp theo mức độ ưu tiên\n• Ước lượng thời gian cho từng việc\n\n**CÂU MẪU CẦN NHỚ:**\n\"Hôm nay tôi sẽ làm [việc ưu tiên] trước.\"\n\"Việc này quan trọng nên tôi ưu tiên làm ngay.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -533,14 +855,30 @@
       "difficulty": "trung bình",
       "duration": "9 phút",
       "icon": "📧",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**CẤU TRÚC EMAIL CHUẨN:**\n\n1. **TIÊU ĐỀ** - Rõ nội dung\n2. **LỜI CHÀO** - Kính gửi...\n3. **NỘI DUNG** - Ngắn gọn, đủ ý\n4. **KẾT THÚC** - Cảm ơn, ký tên"
+          "type": "introduction",
+          "content": "📧 *KỸ NĂNG 12: SỬ DỤNG EMAIL CÔNG VIỆC*\n\nChào bạn! Hôm nay chúng ta học cách viết email chuyên nghiệp.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_12_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**CẤU TRÚC EMAIL CHUẨN:**\n\n1. **TIÊU ĐỀ** - Rõ nội dung\n2. **LỜI CHÀO** - Kính gửi...\n3. **NỘI DUNG** - Ngắn gọn, đủ ý\n4. **KẾT THÚC** - Cảm ơn, ký tên",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_12_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn cần xin tài liệu từ phòng nhân sự.\n\nTiêu đề email nào tốt?",
           "options": [
@@ -561,7 +899,26 @@
               "feedback": "❌ Quá suồng sã, không chuyên nghiệp."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nThử viết một email công việc với đầy đủ cấu trúc.\n\n💡 Gợi ý: Tiêu đề rõ ràng, lời chào phù hợp, nội dung ngắn gọn, kết thúc lịch sự.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_12_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_12_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Tiêu đề email phải rõ ràng, cụ thể\n• Lời chào phù hợp với người nhận\n• Nội dung ngắn gọn, đủ ý\n• Kết thúc bằng lời cảm ơn và chữ ký\n\n**CÂU MẪU CẦN NHỚ:**\n\"Kính gửi [tên người nhận], ...\"\n\"Trân trọng cảm ơn.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -572,14 +929,30 @@
       "difficulty": "khó",
       "duration": "10 phút",
       "icon": "🎤",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**BÍ QUYẾT THUYẾT TRÌNH:**\n\n1. **CHUẨN BỊ** - Nội dung rõ ràng\n2. **NÓI CHẬM** - Từ tốn, rõ chữ\n3. **NHÌN MỌI NGƯỜI** - Giao tiếp bằng mắt"
+          "type": "introduction",
+          "content": "🎤 *KỸ NĂNG 13: THUYẾT TRÌNH ĐƠN GIẢN*\n\nChào bạn! Hôm nay chúng ta học cách thuyết trình trước nhóm nhỏ.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_13_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**BÍ QUYẾT THUYẾT TRÌNH:**\n\n1. **CHUẨN BỊ** - Nội dung rõ ràng\n2. **NÓI CHẬM** - Từ tốn, rõ chữ\n3. **NHÌN MỌI NGƯỜI** - Giao tiếp bằng mắt",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_13_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn cần báo cáo kết quả tuần trước 3 người.\n\nKhi bắt đầu, bạn nên:",
           "options": [
@@ -600,7 +973,26 @@
               "feedback": "❌ Trốn tránh, không dám nói."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nThử thuyết trình về một chủ đề đơn giản trước gương hoặc với bạn bè.\n\n💡 Gợi ý: Chuẩn bị nội dung, nói chậm rãi, nhìn vào người nghe.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_13_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_13_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Chuẩn bị nội dung kỹ trước khi nói\n• Nói chậm, rõ ràng, tự tin\n• Giao tiếp bằng mắt với người nghe\n\n**CÂU MẪU CẦN NHỚ:**\n\"Xin chào mọi người, hôm nay tôi xin trình bày về...\"\n\"Cảm ơn mọi người đã lắng nghe.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -611,14 +1003,30 @@
       "difficulty": "dễ",
       "duration": "5 phút",
       "icon": "📓",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**CÁCH GHI CHÚ HIỆU QUẢ:**\n\n1. **NGHE KỸ** - Tập trung vào điểm chính\n2. **VIẾT TẮT** - Từ khóa quan trọng\n3. **KIỂM TRA** - Đọc lại để chắc đúng"
+          "type": "introduction",
+          "content": "📓 *KỸ NĂNG 14: GHI CHÚ CÔNG VIỆC*\n\nChào bạn! Hôm nay chúng ta học cách ghi chú công việc hiệu quả.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_14_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**CÁCH GHI CHÚ HIỆU QUẢ:**\n\n1. **NGHE KỸ** - Tập trung vào điểm chính\n2. **VIẾT TẮT** - Từ khóa quan trọng\n3. **KIỂM TRA** - Đọc lại để chắc đúng",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_14_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nSếp dặn: \"Mai em mua 3 hộp giấy A4, 2 bút đỏ, mang theo hóa đơn.\"\n\nGhi chú nào tốt?",
           "options": [
@@ -639,7 +1047,26 @@
               "feedback": "❌ Không cụ thể, dễ quên."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy thử ghi chú một công việc bạn cần làm theo cách ngắn gọn, dễ nhớ.\n\n💡 Gợi ý: Chỉ ghi lại từ khóa quan trọng, không cần viết đầy đủ câu.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_14_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_14_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Tập trung nghe để nắm điểm chính\n• Ghi lại bằng từ khóa quan trọng\n• Kiểm tra lại ghi chú để đảm bảo chính xác\n\n**CÂU MẪU CẦN NHỚ:**\n\"Ghi chú: [từ khóa 1], [từ khóa 2], [từ khóa 3]\"\n\"Nhớ: [thông tin quan trọng]\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -650,14 +1077,30 @@
       "difficulty": "khó",
       "duration": "10 phút",
       "icon": "🤝",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**NGUYÊN TẮC ỨNG XỬ VỚI KHÁCH:**\n\n1. **CHÀO HỎI** - Nụ cười, nhiệt tình\n2. **LẮNG NGHE** - Hiểu nhu cầu khách\n3. **GIẢI ĐÁP** - Trả lời rõ ràng"
+          "type": "introduction",
+          "content": "🤝 *KỸ NĂNG 15: ỨNG XỬ VỚI KHÁCH HÀNG*\n\nChào bạn! Hôm nay chúng ta học cách ứng xử với khách hàng chuyên nghiệp.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_15_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**NGUYÊN TẮC ỨNG XỬ VỚI KHÁCH:**\n\n1. **CHÀO HỎI** - Nụ cười, nhiệt tình\n2. **LẮNG NGHE** - Hiểu nhu cầu khách\n3. **GIẢI ĐÁP** - Trả lời rõ ràng",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_15_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nKhách vào cửa hàng, nhìn quanh.\n\nBạn nên:",
           "options": [
@@ -678,7 +1121,26 @@
               "feedback": "❌ Quá ngắn, thiếu lịch sự."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nThử tưởng tượng và đóng vai tiếp đón khách hàng với thái độ nhiệt tình.\n\n💡 Gợi ý: Nụ cười, chào hỏi lịch sự, sẵn sàng hỗ trợ.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_15_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_15_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Chào hỏi khách với nụ cười và thái độ nhiệt tình\n• Lắng nghe kỹ nhu cầu của khách\n• Giải đáp rõ ràng, cung cấp thông tin đầy đủ\n\n**CÂU MẪU CẦN NHỚ:**\n\"Xin chào quý khách, tôi có thể giúp gì cho anh/chị?\"\n\"Cảm ơn quý khách đã đến với cửa hàng chúng tôi.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     },
@@ -689,14 +1151,30 @@
       "difficulty": "dễ",
       "duration": "5 phút",
       "icon": "🧹",
+      "ai_config": {
+        "allow_free_response": true,
+        "allow_hints": true,
+        "max_ai_interactions": 2
+      },
       "steps": [
         {
           "step_id": 1,
-          "type": "theory",
-          "content": "**VỆ SINH NƠI LÀM VIỆC:**\n\n1. **BÀN GỌN GÀNG** - Chỉ để đồ cần thiết\n2. **RÁC ĐÚNG CHỖ** - Phân loại rác\n3. **DỌN SAU KHI LÀM** - Trả mọi thứ về chỗ cũ"
+          "type": "introduction",
+          "content": "🧹 *KỸ NĂNG 16: GIỮ GÌN VỆ SINH NƠI LÀM VIỆC*\n\nChào bạn! Hôm nay chúng ta học cách giữ gìn vệ sinh nơi làm việc.",
+          "buttons": [
+            {"text": "👍 Bắt đầu", "callback": "skill_16_step_2"}
+          ]
         },
         {
           "step_id": 2,
+          "type": "theory",
+          "content": "**VỆ SINH NƠI LÀM VIỆC:**\n\n1. **BÀN GỌN GÀNG** - Chỉ để đồ cần thiết\n2. **RÁC ĐÚNG CHỖ** - Phân loại rác\n3. **DỌN SAU KHI LÀM** - Trả mọi thứ về chỗ cũ",
+          "buttons": [
+            {"text": "Tiếp tục →", "callback": "skill_16_step_3"}
+          ]
+        },
+        {
+          "step_id": 3,
           "type": "scenario",
           "content": "**TÌNH HUỐNG:**\nBạn vừa ăn xong bữa trưa tại bàn làm việc.\n\nBạn nên:",
           "options": [
@@ -717,7 +1195,26 @@
               "feedback": "❌ Ích kỷ, đùn đẩy trách nhiệm."
             }
           ],
+          "ai_controlled": true,
           "correct_answer": "B"
+        },
+        {
+          "step_id": 4,
+          "type": "practice",
+          "content": "**THỰC HÀNH THÊM:**\n\nHãy dọn dẹp và sắp xếp bàn làm việc của bạn ngay hôm nay.\n\n💡 Gợi ý: Chỉ để đồ cần thiết, phân loại rác, trả đồ về chỗ cũ sau khi dùng.",
+          "buttons": [
+            {"text": "✅ Tôi đã hiểu", "callback": "skill_16_complete"},
+            {"text": "🔄 Làm thêm ví dụ", "callback": "skill_16_more_practice"}
+          ]
+        },
+        {
+          "step_id": 5,
+          "type": "summary",
+          "content": "🎉 *CHÚC MỪNG!* Bạn đã hoàn thành bài học.\n\n**TÓM TẮT:**\n• Giữ bàn làm việc gọn gàng, chỉ để đồ cần thiết\n• Vứt rác đúng nơi quy định, phân loại rác\n• Dọn dẹp sau khi sử dụng, trả đồ về chỗ cũ\n\n**CÂU MẪU CẦN NHỚ:**\n\"Mình nên giữ gìn vệ sinh chung.\"\n\"Đồ dùng xong nên trả về chỗ cũ.\"",
+          "buttons": [
+            {"text": "🎯 Học kỹ năng tiếp theo", "callback": "next_skill"},
+            {"text": "🏠 Về menu chính", "callback": "main_menu"}
+          ]
         }
       ]
     }

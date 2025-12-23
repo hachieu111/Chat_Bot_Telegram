@@ -2,18 +2,24 @@
   "6496305290": {
     "id": 6496305290,
     "name": "tôi tên hiếu",
-    "currentSkill": "skill_13",
-    "currentStep": 1,
+    "currentSkill": "skill_16",
+    "currentStep": 2,
     "completedSkills": [
-      "skill_01"
+      "skill_01",
+      "skill_02",
+      "skill_03",
+      "skill_16"
     ],
     "scores": {
-      "skill_01": 100
+      "skill_01": 100,
+      "skill_02": 100,
+      "skill_03": 100,
+      "skill_16": 100
     },
-    "aiUsageCount": 4,
+    "aiUsageCount": 7,
     "createdAt": "2025-12-22T06:23:42.966Z",
-    "lastActive": "2025-12-22T13:56:05.166Z",
-    "aiMode": null
+    "lastActive": "2025-12-23T07:37:35.000Z",
+    "aiMode": "free_response"
   },
   "6939463544": {
     "id": 6939463544,
