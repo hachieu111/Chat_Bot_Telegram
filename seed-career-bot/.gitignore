@@ -1,0 +1,46 @@
+# SECRETS - QUAN TRỌNG NHẤT
+.env
+.env.local
+.env.*.local
+*.env
+secrets/
+keys/
+certificates/
+
+# NODE MODULES
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# RUNTIME DATA
+*.pid
+*.seed
+*.pid.lock
+
+# COVERAGE
+coverage/
+.nyc_output
+
+# LOGS
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TEMP FILES
+tmp/
+temp/
