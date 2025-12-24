@@ -1,8 +1,7 @@
 # SECRETS - QUAN TRỌNG NHẤT
 .env
 .env.local
-.env.*.local
-*.env
+
 secrets/
 keys/
 certificates/
