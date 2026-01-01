@@ -815,7 +815,9 @@ router.get('/webhook-info', async (req, res) => {
 
 // ==================== KHỞI TẠO BOT NGAY KHI MODULE LOAD ====================
 
-initializeBot();
+if (!bot) {
+    initializeBot();
+}
 
 // ==================== EXPORT ====================
 
