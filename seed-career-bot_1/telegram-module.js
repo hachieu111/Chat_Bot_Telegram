@@ -742,7 +742,13 @@ async function setupTelegramWebhook() {
         bot = initializeBot();
         if (!bot) return;
     }
-    
+     // Debug: In ra tất cả biến môi trường liên quan đến URL
+    console.log('🔍 Debug Environment Variables:');
+    console.log('  RENDER_EXTERNAL_URL:', process.env.RENDER_EXTERNAL_URL);
+    console.log('  NGROK_URL:', process.env.NGROK_URL);
+    console.log('  BASE_URL:', process.env.BASE_URL);
+    console.log('  PORT:', process.env.PORT);
+
     const baseUrl = process.env.BASE_URL || 
                    process.env.RENDER_EXTERNAL_URL ||
                    process.env.NGROK_URL ||
@@ -774,7 +780,45 @@ async function setupTelegramWebhook() {
 }
 
 // ==================== WEBHOOK ENDPOINT ====================
-
+router.get('/webhook', (req, res) => {
+    res.json({
+        message: 'Telegram webhook endpoint is active!',
+        method: 'Use POST method for Telegram updates',
+        timestamp: new Date().toISOString(),
+        service: 'SEED Career Bot - Telegram Module',
+        status: 'online'
+    });
+});
+router.get('/test', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Telegram Webhook Test</title>
+            <style>
+                body { font-family: Arial; padding: 20px; }
+                .success { color: green; }
+                .info { background: #f0f0f0; padding: 10px; border-radius: 5px; }
+            </style>
+        </head>
+        <body>
+            <h1>✅ Telegram Webhook is Active</h1>
+            <div class="info">
+                <h3>Endpoint Information:</h3>
+                <p><strong>URL:</strong> https://chat-bot-telegram-iiwf.onrender.com/telegram/webhook</p>
+                <p><strong>Method:</strong> POST (for Telegram updates)</p>
+                <p><strong>Test GET:</strong> You're seeing this page means GET works!</p>
+            </div>
+            <h3>Next Steps:</h3>
+            <ol>
+                <li>Set this URL in your Telegram Bot via BotFather: <code>https://chat-bot-telegram-iiwf.onrender.com/telegram/webhook</code></li>
+                <li>Test by sending a message to your bot</li>
+                <li>Check server logs for incoming messages</li>
+            </ol>
+        </body>
+        </html>
+    `);
+});
 router.post('/webhook', (req, res) => {
     if (!bot) {
         bot = initializeBot();
@@ -788,6 +832,7 @@ router.post('/webhook', (req, res) => {
     
     bot.processUpdate(req.body);
     res.sendStatus(200);
+    
 });
 
 // ==================== WEBHOOK INFO ENDPOINT ====================
