@@ -1,0 +1,32 @@
+{
+  "name": "seed-career-bot",
+  "version": "3.0.0",
+  "description": "Multi-platform career skills bot for Telegram and Messenger",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "telegram": "node bot-telegram.js",
+    "messenger": "node bot-messenger.js",
+    "telegram-standalone": "node bot-telegram.js",
+    "messenger-standalone": "node bot-messenger.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.61.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "telegram-bot",
+    "messenger-bot",
+    "multi-platform",
+    "career-coaching",
+    "ai-chatbot"
+  ],
+  "author": "SEED Team",
+  "license": "MIT"
+}

@@ -1,0 +1,80 @@
+{
+  "6496305290": {
+    "id": 6496305290,
+    "name": "tôi tên hiếu",
+    "currentSkill": "skill_06",
+    "currentStep": 2,
+    "completedSkills": [
+      "skill_01",
+      "skill_02",
+      "skill_03",
+      "skill_16",
+      "skill_04",
+      "skill_09",
+      "skill_05"
+    ],
+    "scores": {
+      "skill_01": 100,
+      "skill_02": 100,
+      "skill_03": 100,
+      "skill_16": 100,
+      "skill_04": 100,
+      "skill_09": 100,
+      "skill_05": 100
+    },
+    "aiUsageCount": 16,
+    "createdAt": "2025-12-22T06:23:42.966Z",
+    "lastActive": "2026-01-01T05:02:12.268Z",
+    "aiMode": null
+  },
+  "6939463544": {
+    "id": 6939463544,
+    "name": "anh",
+    "currentSkill": "skill_02",
+    "currentStep": 0,
+    "completedSkills": [
+      "skill_01"
+    ],
+    "scores": {
+      "skill_01": 100
+    },
+    "aiUsageCount": 10,
+    "createdAt": "2025-12-22T07:44:00.435Z",
+    "lastActive": "2025-12-22T10:22:27.963Z",
+    "aiMode": "free_response"
+  },
+  "7929746524": {
+    "id": 7929746524,
+    "name": "Thành",
+    "currentSkill": null,
+    "currentStep": 0,
+    "completedSkills": [],
+    "scores": {},
+    "aiUsageCount": 0,
+    "createdAt": "2025-12-22T13:55:34.745Z",
+    "lastActive": "2025-12-22T13:55:34.746Z"
+  },
+  "8538123025": {
+    "id": 8538123025,
+    "name": "",
+    "currentSkill": null,
+    "currentStep": 0,
+    "completedSkills": [],
+    "scores": {},
+    "aiUsageCount": 0,
+    "createdAt": "2025-12-22T13:55:36.262Z",
+    "lastActive": "2025-12-22T13:55:36.262Z"
+  },
+  "fb_25583208987942296": {
+    "id": "fb_25583208987942296",
+    "name": "Hiếu Hạc",
+    "currentSkill": null,
+    "currentStep": 0,
+    "completedSkills": [],
+    "scores": {},
+    "aiUsageCount": 0,
+    "createdAt": "2025-12-28T15:21:50.651Z",
+    "lastActive": "2025-12-28T15:21:59.712Z",
+    "avatar": "https://platform-lookaside.fbsbx.com/platform/profilepic/?eai=Aa0PUxS87FhBGhhsef5uyOPm4Q_2VzDI9yXAitA-ix5nOPaJFaDPtBqAO35jvrz6_S-jKvzha7vd&psid=25583208987942296&width=1024&ext=1769526570&hash=AT-XC93nn6MG34NkArTYNQf9"
+  }
+}
