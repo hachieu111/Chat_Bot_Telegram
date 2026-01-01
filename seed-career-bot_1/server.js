@@ -1,7 +1,7 @@
-//file: server.js
+// File: server.js
 const express = require('express');
 const { router: telegramRouter, setupWebhook: setupTelegramWebhook } = require('./telegram-module');
-const messengerApp = require('./messenger-module');
+const { router: messengerRouter } = require('./messenger-module');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/telegram', telegramRouter);
 
 // 2. Messenger bot routes
-app.use(messengerApp);  // Messenger routes đã được định nghĩa trong messenger-module.js
+app.use('/messenger', messengerRouter);
 
 // 3. Health check endpoint
 app.get('/', (req, res) => {
@@ -26,12 +26,12 @@ app.get('/', (req, res) => {
         platforms: ['Telegram', 'Facebook Messenger'],
         uptime: process.uptime(),
         timestamp: new Date().toISOString(),
-        version: '2.0.0',
+        version: '3.0.0',
         endpoints: {
             telegram: '/telegram/webhook',
             messenger: '/messenger/webhook',
-            admin: '/admin?secret=YOUR_SECRET',
-            health: '/health'
+            health: '/health',
+            admin: `/admin?secret=${process.env.ADMIN_SECRET || 'YOUR_SECRET'}`
         }
     });
 });
@@ -41,7 +41,11 @@ app.get('/health', (req, res) => {
     res.json({
         status: 'healthy',
         timestamp: new Date().toISOString(),
-        uptime: process.uptime()
+        uptime: process.uptime(),
+        services: {
+            telegram: 'active',
+            messenger: 'active'
+        }
     });
 });
 
@@ -51,7 +55,8 @@ app.get('/admin', (req, res) => {
     if (!secret || secret !== process.env.ADMIN_SECRET) {
         return res.status(403).send(`
             <h1>Access Denied</h1>
-            <p>Please provide correct secret key: ?secret=YOUR_SECRET</p>
+            <p>Please provide correct secret key: ?secret=YOUR_ADMIN_SECRET</p>
+            <p>Current secret in env: ${process.env.ADMIN_SECRET ? 'Set' : 'Not set'}</p>
         `);
     }
     
@@ -81,19 +86,18 @@ app.get('/admin', (req, res) => {
                     <h2>📱 Telegram Bot</h2>
                     <p>Status: <span class="status-online">🟢 Online</span></p>
                     <p><strong>Webhook Endpoint:</strong></p>
-                    <div class="endpoint">/telegram/webhook</div>
+                    <div class="endpoint">POST /telegram/webhook</div>
                     <p><strong>Actions:</strong></p>
                     <a href="/telegram/webhook-info" style="display: inline-block; background: #3b82f6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin: 5px;">Webhook Info</a>
-                    <a href="/api/stats?x-admin-token=${secret}" style="display: inline-block; background: #10b981; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin: 5px;">View Stats</a>
                 </div>
                 
                 <div class="platform-card">
                     <h2>💬 Messenger Bot</h2>
                     <p>Status: <span class="status-online">🟢 Online</span></p>
                     <p><strong>Webhook Endpoint:</strong></p>
-                    <div class="endpoint">/messenger/webhook</div>
-                    <p><strong>Actions:</strong></p>
-                    <a href="https://developers.facebook.com/apps/" target="_blank" style="display: inline-block; background: #1877f2; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin: 5px;">Facebook Developer</a>
+                    <div class="endpoint">GET/POST /messenger/webhook</div>
+                    <p><strong>Health Check:</strong></p>
+                    <a href="/messenger/health" style="display: inline-block; background: #10b981; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin: 5px;">Check Health</a>
                 </div>
             </div>
             
@@ -103,6 +107,7 @@ app.get('/admin', (req, res) => {
                 <p><strong>Node.js Version:</strong> ${process.version}</p>
                 <p><strong>Platform:</strong> ${process.platform}</p>
                 <p><strong>Memory Usage:</strong> ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB</p>
+                <p><strong>Environment:</strong> ${process.env.NODE_ENV || 'development'}</p>
             </div>
         </body>
         </html>
@@ -118,7 +123,7 @@ app.use((req, res, next) => {
         available_routes: {
             home: '/',
             health: '/health',
-            admin: '/admin?secret=YOUR_SECRET',
+            admin: '/admin?secret=YOUR_ADMIN_SECRET',
             telegram_webhook: '/telegram/webhook (POST only)',
             messenger_webhook: '/messenger/webhook (GET/POST)',
             telegram_webhook_info: '/telegram/webhook-info'

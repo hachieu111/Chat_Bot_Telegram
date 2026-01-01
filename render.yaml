@@ -1,0 +1,12 @@
+# render.yaml
+services:
+  - type: web
+    name: seed-career-bot_1
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
